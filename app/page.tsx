@@ -1,0 +1,17 @@
+import Image from "next/image";
+import styles from "./page.module.css";
+import { getServerSession } from "next-auth/next";
+
+export default async function Home() {
+  const session = await getServerSession();
+  return (
+    <>
+      getServerSession Result
+      {session?.user?.name ? (
+        <div>{session.user.name}</div>
+      ) : (
+        <div>Not signed In</div>
+      )}
+    </>
+  );
+}
