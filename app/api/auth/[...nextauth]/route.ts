@@ -1,10 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Strava from "next-auth/providers/strava";
 
 const clientId = process.env.STRAVA_CLIENT_ID ?? "";
 const clientSecret = process.env.STRAVA_CLIENT_SECRET ?? "";
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     Strava({
       clientId: clientId,
@@ -16,8 +17,24 @@ export const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user, account }) => {
+      if (account && user) {
+        token.id = user.id;
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (session.user) {
+        session.user.id = token.id;
+      }
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
 };
 
-export const handlers = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 
-export { handlers as GET, handlers as POST };
+export { handler as GET, handler as POST };
