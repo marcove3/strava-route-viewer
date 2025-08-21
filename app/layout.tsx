@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import NavMenu from "./components/NavMenu";
 import Providers from "./components/Providers";
 import { getServerSession } from "next-auth";
