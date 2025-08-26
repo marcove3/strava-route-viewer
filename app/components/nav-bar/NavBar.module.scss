@@ -1,0 +1,24 @@
+@import "../../globals.scss";
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  height: 60px;
+  background: rgb(223, 223, 223);
+  padding: 0;
+  padding-left: calc(2 * $grid-spacing);
+  padding-right: calc(2 * $grid-spacing);
+  grid-gap: $grid-spacing;
+
+  .links {
+    display: flex;
+    justify-content: flex-start;
+    gap: calc(4 * $grid-spacing);
+  }
+}

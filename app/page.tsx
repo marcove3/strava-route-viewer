@@ -1,5 +1,3 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 import { getServerSession } from "next-auth/next";
 
 export default async function Home() {

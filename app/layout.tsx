@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.scss";
-import NavMenu from "./components/NavMenu";
 import Providers from "./components/Providers";
 import { getServerSession } from "next-auth";
+import NavBar from "./components/nav-bar/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +30,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers session={session}>
-          <NavMenu />
+          <NavBar />
           <main>{children}</main>
         </Providers>
       </body>

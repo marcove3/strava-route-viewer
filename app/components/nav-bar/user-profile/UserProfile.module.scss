@@ -1,0 +1,22 @@
+@import "../../../globals.scss";
+
+.userProfile {
+  display: grid;
+  grid-template-columns: 60px auto;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: calc($grid-spacing/2);
+
+  .userIcon {
+    grid-column-start: 1;
+    grid-column-end: span 1;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+
+    .icon {
+      width: calc(5 * $grid-spacing);
+      //height: calc(5 * $grid-spacing);
+    }
+  }
+}
