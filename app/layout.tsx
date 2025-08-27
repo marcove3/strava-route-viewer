@@ -28,7 +28,7 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <Providers session={session}>
           <NavBar />
           <main>{children}</main>
