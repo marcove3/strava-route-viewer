@@ -1,4 +1,4 @@
-@import "../../../_variables.scss";
+@use "../../../_variables.scss" as variables;
 
 .userProfile {
   display: grid;
@@ -6,7 +6,7 @@
   grid-template-rows: 1fr 1fr;
   align-items: center;
   justify-items: center;
-  gap: calc($grid-spacing/2);
+  gap: calc(variables.$grid-spacing/2);
 
   .userIcon {
     grid-column-start: 1;
@@ -15,8 +15,7 @@
     grid-row-end: span 2;
 
     .icon {
-      width: calc(5 * $grid-spacing);
-      //height: calc(5 * $grid-spacing);
+      width: calc(5 * variables.$grid-spacing);
     }
   }
 }

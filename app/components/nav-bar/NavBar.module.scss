@@ -1,4 +1,4 @@
-@import "../../_variables.scss";
+@use "../../_variables.scss" as variables;
 
 .navbar {
   position: sticky;
@@ -12,13 +12,13 @@
   height: 60px;
   background: rgb(223, 223, 223);
   padding: 0;
-  padding-left: calc(2 * $grid-spacing);
-  padding-right: calc(2 * $grid-spacing);
-  grid-gap: $grid-spacing;
+  padding-left: calc(2 * variables.$grid-spacing);
+  padding-right: calc(2 * variables.$grid-spacing);
+  grid-gap: variables.$grid-spacing;
 
   .links {
     display: flex;
     justify-content: flex-start;
-    gap: calc(4 * $grid-spacing);
+    gap: calc(4 * variables.$grid-spacing);
   }
 }
