@@ -20,5 +20,18 @@
     display: flex;
     justify-content: flex-start;
     gap: calc(4 * variables.$grid-spacing);
+
+    .link {
+      color: black;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .active {
+      text-decoration: underline;
+    }
   }
 }
