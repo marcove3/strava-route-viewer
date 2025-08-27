@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { stravaApiFetch, StravaApiError } from "@/lib/strava";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import authOptions from "@/app/lib/auth";
 import type { StravaRoute } from "@/types/strava";
 
 export async function GET() {
