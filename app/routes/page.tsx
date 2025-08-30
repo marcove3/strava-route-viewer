@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { StravaRoute } from "@/types/strava";
+import type { StravaRoute } from "@/types/strava";
+import styles from "./page.module.scss";
+import RouteRow from "@/app/components/routes/RouteRow";
 
 export default function RoutesPage() {
   const [routes, setRoutes] = useState<StravaRoute[]>([]);
@@ -9,7 +11,7 @@ export default function RoutesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRoutes = async () => {
+    (async () => {
       try {
         const res = await fetch("/api/strava/routes");
         if (!res.ok) {
@@ -24,9 +26,7 @@ export default function RoutesPage() {
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchRoutes();
+    })();
   }, []);
 
   if (loading) {
@@ -38,15 +38,11 @@ export default function RoutesPage() {
   }
 
   return (
-    <div>
-      <h1>My Strava Routes</h1>
+    <div className={styles.routesContainer}>
       {routes.length > 0 ? (
         <ul>
           {routes.map((route) => (
-            <li key={route.id}>
-              <h2>{route.name}</h2>
-              <p>Distance: {(route.distance / 1000).toFixed(2)} km</p>
-            </li>
+            <RouteRow key={route.id} route={route} />
           ))}
         </ul>
       ) : (

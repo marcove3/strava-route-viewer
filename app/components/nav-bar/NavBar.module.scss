@@ -15,6 +15,7 @@
   padding-left: calc(2 * variables.$grid-spacing);
   padding-right: calc(2 * variables.$grid-spacing);
   grid-gap: variables.$grid-spacing;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .links {
     display: flex;

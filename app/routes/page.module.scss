@@ -1,0 +1,14 @@
+@use "../variables.scss" as variables;
+
+.routesContainer {
+  background-color: #f8f7f7;
+
+  ul {
+    padding: variables.$grid-spacing;
+    list-style-type: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto;
+    gap: variables.$grid-spacing;
+  }
+}
