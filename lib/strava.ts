@@ -19,7 +19,6 @@ async function stravaApiFetch<T>(path: string): Promise<T> {
 
   const stravaApiUrl =
     process.env.STRAVA_API_URL ?? "https://www.strava.com/api/v3";
-
   const res = await fetch(`${stravaApiUrl}${path}`, {
     headers: {
       Authorization: `Bearer ${session.accessToken}`,

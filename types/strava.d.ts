@@ -21,6 +21,7 @@ export interface StravaAthlete {
 
 export interface StravaRoute {
   id: number;
+  id_str: string;
   athlete: {
     id: number;
     resource_state: number;
