@@ -1,39 +1,12 @@
 "use client";
 import "leaflet/dist/leaflet.css";
 
-import polyline from "@mapbox/polyline";
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { StravaRoute } from "@/types/strava";
 import { useParams } from "next/navigation";
-
-function RouteMapViewer({ route }: { route: StravaRoute | null }) {
-  const coordinates: [number, number][] = route?.map?.summary_polyline
-    ? polyline.decode(route.map.summary_polyline)
-    : [];
-
-  const center = coordinates[0],
-    zoom = 13;
-  debugger;
-  return (
-    <>
-      <MapContainer
-        center={center}
-        zoom={zoom}
-        style={{ height: "100vh", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-
-        {coordinates.length > 0 && (
-          <Polyline positions={coordinates} color="blue" />
-        )}
-      </MapContainer>
-    </>
-  );
-}
+import RouteMapViewer from "@/app/components/routes/RouteMapViewer";
+import polyline from "@mapbox/polyline";
+import Player from "@/app/components/Player";
 
 export default function RouteDetailPage() {
   const params = useParams();
@@ -41,6 +14,15 @@ export default function RouteDetailPage() {
   const [route, setRoute] = useState<StravaRoute | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const coordinates: [number, number][] = useMemo(
+    () =>
+      route?.map?.summary_polyline
+        ? polyline.decode(route.map.summary_polyline)
+        : [],
+    [route]
+  );
+
+  let [viewPosition, setViewPosition] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -61,6 +43,24 @@ export default function RouteDetailPage() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (coordinates.length === 0) return;
+
+    let i = 0;
+    const interval = setInterval(() => {
+      setViewPosition(i);
+      console.log(
+        `Coordinate ${i}: [${coordinates[i][0]}, ${coordinates[i][1]}]`
+      );
+      i++;
+      if (i >= coordinates.length) {
+        clearInterval(interval);
+      }
+    }, 100); // 1000ms between updates
+
+    return () => clearInterval(interval);
+  }, [coordinates]);
+
   if (loading) {
     return <div>Loading your routes...</div>;
   }
@@ -69,5 +69,18 @@ export default function RouteDetailPage() {
     return <div>Error: {error}</div>;
   }
 
-  return <RouteMapViewer route={route} />;
+  return (
+    <>
+      <RouteMapViewer
+        routeCoords={coordinates}
+        viewPosition={coordinates[viewPosition]}
+      />
+      <Player
+        isPlaying={false}
+        onPlay={() => {}}
+        onRw={() => {}}
+        onFf={() => {}}
+      />
+    </>
+  );
 }
