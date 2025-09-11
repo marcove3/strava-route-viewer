@@ -1,5 +1,8 @@
 html {
   body {
     margin: 0;
+    main {
+      height: calc(100vh - 60px);
+    }
   }
 }

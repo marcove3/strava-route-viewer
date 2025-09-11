@@ -22,7 +22,7 @@ export default function RouteDetailPage() {
     [route]
   );
 
-  let [viewPosition, setViewPosition] = useState<number>(0);
+  const [viewPosition, setViewPosition] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
