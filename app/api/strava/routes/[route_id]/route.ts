@@ -5,7 +5,7 @@ import { stravaApiFetch, StravaApiError } from "@/lib/strava";
 
 export async function GET(
   _: Request,
-  { params }: { params: { route_id: string } }
+  { params }: { params: Promise<{ route_id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session) {
