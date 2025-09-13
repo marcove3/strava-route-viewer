@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import type { StravaRoute } from "@/types/strava";
 import { useParams } from "next/navigation";
 import RouteMapViewer from "@/app/components/routes/RouteMapViewer";
+// @ts-expect-error 3rd party import
 import polyline from "@mapbox/polyline";
 import Player from "@/app/components/Player";
 
