@@ -14,11 +14,11 @@ export default function RouteMapViewer({
     zoom = 13;
 
   return (
-    //@ts-expect-error
+    //@ts-expect-error lint error from 3rd party lib
     <MapContainer className={styles.mapContainer} center={center} zoom={zoom}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        //@ts-expect-error
+        //@ts-expect-error lint error from 3rd party lib
 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
@@ -27,13 +27,13 @@ export default function RouteMapViewer({
         <>
           <Polyline
             positions={routeCoords}
-            //@ts-expect-error
+            //@ts-expect-error  lint error from 3rd party lib
             color="blue"
           />
           {viewPosition && (
             <CircleMarker
               center={viewPosition}
-              //@ts-expect-error
+              //@ts-expect-error lint error from 3rd party lib
               radius={5}
               color="red"
               fillColor="red"
