@@ -14,11 +14,11 @@ export default function RouteMapViewer({
     zoom = 13;
 
   return (
-    // @ts-ignore
+    //@ts-expect-error
     <MapContainer className={styles.mapContainer} center={center} zoom={zoom}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        // @ts-ignore
+        //@ts-expect-error
 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
@@ -27,13 +27,13 @@ export default function RouteMapViewer({
         <>
           <Polyline
             positions={routeCoords}
-            // @ts-ignore
+            //@ts-expect-error
             color="blue"
           />
           {viewPosition && (
             <CircleMarker
               center={viewPosition}
-              // @ts-ignore
+              //@ts-expect-error
               radius={5}
               color="red"
               fillColor="red"
