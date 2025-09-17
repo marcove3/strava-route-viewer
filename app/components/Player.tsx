@@ -1,3 +1,5 @@
+import styles from "./Player.module.scss";
+
 export default function Player({
   isPlaying,
   onPlay,
@@ -10,7 +12,7 @@ export default function Player({
   onFf: () => void;
 }) {
   return (
-    <div className="player">
+    <div className={styles.player}>
       <button onClick={onRw}>Rewind</button>
       <button onClick={onPlay}>{isPlaying ? "Pause" : "Play"}</button>
       <button onClick={onFf}>Fast Forward</button>

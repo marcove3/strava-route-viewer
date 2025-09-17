@@ -8,6 +8,7 @@ import RouteMapViewer from "@/app/components/routes/RouteMapViewer";
 // @ts-expect-error 3rd party import
 import polyline from "@mapbox/polyline";
 import Player from "@/app/components/Player";
+import styles from "./page.module.scss";
 
 export default function RouteDetailPage() {
   const params = useParams();
@@ -24,6 +25,7 @@ export default function RouteDetailPage() {
   );
 
   const [viewPosition, setViewPosition] = useState<number>(0);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -47,20 +49,18 @@ export default function RouteDetailPage() {
   useEffect(() => {
     if (coordinates.length === 0) return;
 
-    let i = 0;
     const interval = setInterval(() => {
-      setViewPosition(i);
-      console.log(
-        `Coordinate ${i}: [${coordinates[i][0]}, ${coordinates[i][1]}]`
-      );
-      i++;
-      if (i >= coordinates.length) {
-        clearInterval(interval);
+      if (!isPlaying) return;
+
+      console.log(`Coordinate ${viewPosition}: [${coordinates[viewPosition]}]`);
+      setViewPosition(viewPosition + 1);
+      if (viewPosition >= coordinates.length) {
+        setViewPosition(0);
       }
-    }, 100); // 1000ms between updates
+    }, 1000); // 1000ms between updates
 
     return () => clearInterval(interval);
-  }, [coordinates]);
+  }, [viewPosition, coordinates, isPlaying]);
 
   if (loading) {
     return <div>Loading your routes...</div>;
@@ -71,17 +71,25 @@ export default function RouteDetailPage() {
   }
 
   return (
-    <>
-      <RouteMapViewer
-        routeCoords={coordinates}
-        viewPosition={coordinates[viewPosition]}
-      />
+    <div className={styles.pageLayout}>
+      <div className={styles.topRow}>
+        <RouteMapViewer
+          routeCoords={coordinates}
+          viewPosition={coordinates[viewPosition]}
+        />
+      </div>
       <Player
-        isPlaying={false}
-        onPlay={() => {}}
-        onRw={() => {}}
-        onFf={() => {}}
+        isPlaying={isPlaying}
+        onPlay={() => {
+          setIsPlaying(!isPlaying);
+        }}
+        onRw={() => {
+          setViewPosition(viewPosition - 1);
+        }}
+        onFf={() => {
+          setViewPosition(viewPosition + 1);
+        }}
       />
-    </>
+    </div>
   );
 }

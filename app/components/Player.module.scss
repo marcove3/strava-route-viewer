@@ -1,0 +1,8 @@
+@use "../_variables.scss" as variables;
+
+.player {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  padding: variables.$grid-spacing;
+}
