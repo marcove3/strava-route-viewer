@@ -19,14 +19,14 @@ function NavBar() {
         >
           My Routes
         </Link>
-        <Link
+        {/* <Link
           href="/activities"
           className={`${styles.link} ${
             pathname === "/activities" ? styles.active : ""
           }`}
         >
           My Activities
-        </Link>
+        </Link> */}
       </div>
       <NavMenu />
     </nav>

@@ -9,6 +9,7 @@ import RouteMapViewer from "@/app/components/routes/RouteMapViewer";
 import polyline from "@mapbox/polyline";
 import Player from "@/app/components/Player";
 import styles from "./page.module.scss";
+import StreetViewer from "@/app/components/street-view/StreetViewer";
 
 export default function RouteDetailPage() {
   const params = useParams();
@@ -54,7 +55,7 @@ export default function RouteDetailPage() {
 
       console.log(`Coordinate ${viewPosition}: [${coordinates[viewPosition]}]`);
       setViewPosition(viewPosition + 1);
-      if (viewPosition >= coordinates.length) {
+      if (viewPosition >= coordinates.length - 1) {
         setViewPosition(0);
       }
     }, 1000); // 1000ms between updates
@@ -77,6 +78,13 @@ export default function RouteDetailPage() {
           routeCoords={coordinates}
           viewPosition={coordinates[viewPosition]}
         />
+        <StreetViewer
+          coordinates={coordinates[viewPosition]}
+          heading={calculateHeading(
+            coordinates[viewPosition],
+            coordinates[viewPosition + 1]
+          )}
+        />
       </div>
       <Player
         isPlaying={isPlaying}
@@ -92,4 +100,24 @@ export default function RouteDetailPage() {
       />
     </div>
   );
+}
+
+function calculateHeading(
+  from: [number, number],
+  to: [number, number]
+): number {
+  const [lat1, lng1] = from;
+  const [lat2, lng2] = to;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const lat1Rad = (lat1 * Math.PI) / 180;
+  const lat2Rad = (lat2 * Math.PI) / 180;
+
+  const y = Math.sin(dLng) * Math.cos(lat2Rad);
+  const x =
+    Math.cos(lat1Rad) * Math.sin(lat2Rad) -
+    Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dLng);
+
+  const bearingRad = Math.atan2(y, x);
+  const bearingDeg = (bearingRad * 180) / Math.PI;
+  return (bearingDeg + 360) % 360; // Normalize to 0-360
 }
